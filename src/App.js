@@ -110,6 +110,7 @@ const App = () => {
       <input
         className="input"
         autoFocus
+        onFocus={(event) => event.preventDefault}
         onChange={handleKeyUp}
         onKeyPress={enterListener}
         onKeyUp={appendAttempted}
