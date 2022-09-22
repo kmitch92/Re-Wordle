@@ -50,26 +50,39 @@ const Grid = ({
     while (i < guessList.length) {
       const rowSquares = rows[i].children;
       const rowSquaresArr = [...rowSquares];
+      const gameLetters = gameWord.split("");
 
-      rowSquaresArr.forEach((square, index) => {
+      rowSquaresArr.forEach((square) => {
         square.classList.add("attempted");
         setAttempted((curr) => [...curr, square.innerHTML]);
-        if (gameWord.includes(square.innerHTML)) {
-          console.log("gets inside wrongPlace", square.innerHTML);
-          square.classList.add("wrongPlace");
-          if (!wrongPlace.includes(square.innerHTML)) {
-            setWrongPlace((curr) => [...curr, square.innerHTML]);
-          }
-        }
+      });
+
+      rowSquaresArr.forEach((square, index) => {
         if (gameWord.charAt(index) == square.innerHTML) {
-          console.log("gets inside rightplace conditional");
           square.classList.add("rightPlace");
+          const letterIndex = gameLetters.indexOf(square.innerHTML);
+          gameLetters.splice(letterIndex, 1);
 
           if (!rightPlace.includes(square.innerText)) {
             setRightPlace((curr) => [...curr, square.innerHTML]);
           }
         }
       });
+
+      rowSquaresArr.forEach((square) => {
+        if (
+          gameWord.includes(square.innerHTML) &&
+          gameLetters.includes(square.innerHTML)
+        ) {
+          square.classList.add("wrongPlace");
+          if (!wrongPlace.includes(square.innerHTML)) {
+            setWrongPlace((curr) => [...curr, square.innerHTML]);
+          }
+          const letterIndex = gameLetters.indexOf(square.innerHTML);
+          gameLetters.splice(letterIndex, 1);
+        }
+      });
+
       i++;
     }
   };

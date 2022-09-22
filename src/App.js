@@ -26,6 +26,8 @@ const App = () => {
     );
   }
 
+  console.log(gameWord);
+
   const handleKeyUp = (event) => {
     event.preventDefault();
     const chars = /^[A-Za-z]+$/;
