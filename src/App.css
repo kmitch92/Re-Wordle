@@ -216,11 +216,14 @@ footer {
   }
 }
 .popup {
+  align-self: center;
   position: fixed;
-  top: 12%;
-  bottom: 50%;
-  height: 85%;
-  width: 70%;
+  top: 6%;
+  bottom: 40%;
+  right: 5%;
+  left: 5%;
+  height: 90%;
+  width: 90%;
   background-color: white;
   outline: white none;
   border-radius: 8px;
@@ -242,6 +245,12 @@ footer {
   justify-content: space-evenly;
   align-items: center;
   padding: 12vh;
+}
+
+@media only screen and (max-width: 430px) {
+  .popup-inner {
+    padding: 1vh;
+  }
 }
 
 .popup-button {
