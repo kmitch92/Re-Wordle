@@ -15,7 +15,9 @@ const Grid = ({
   setNextWord,
   setCurrentGuess,
   setAttempted,
+  wrongPlace,
   setWrongPlace,
+  rightPlace,
   setRightPlace,
 }) => {
   const [openWinBox, setOpenWinBox] = useState(false);
@@ -48,28 +50,24 @@ const Grid = ({
     while (i < guessList.length) {
       const rowSquares = rows[i].children;
       const rowSquaresArr = [...rowSquares];
-      const gameWordArray = gameWord.split("");
 
-      rowSquaresArr.forEach((square) => {
-        if (gameWordArray[square.id.split("square")[1]] === square.innerHTML) {
-          square.classList.add("rightPlace");
-          setRightPlace((curr) => [...curr, square.innerHTML]);
-          gameWordArray[square.id.split("square")[1]] = "";
-        }
-        if (
-          gameWordArray.includes(square.innerHTML) &&
-          ![...square.classList].includes("rightPlace")
-        ) {
+      rowSquaresArr.forEach((square, index) => {
+        square.classList.add("attempted");
+        setAttempted((curr) => [...curr, square.innerHTML]);
+        if (gameWord.includes(square.innerHTML)) {
+          console.log("gets inside wrongPlace", square.innerHTML);
           square.classList.add("wrongPlace");
-          setWrongPlace((curr) => [...curr, square.innerHTML]);
-          gameWordArray[square.id.split("square")[1]] = "";
+          if (!wrongPlace.includes(square.innerHTML)) {
+            setWrongPlace((curr) => [...curr, square.innerHTML]);
+          }
         }
-        if (
-          ![...square.classList].includes("rightPlace") &&
-          ![...square.classList].includes("wrongPlace")
-        ) {
-          square.classList.add("attempted");
-          setAttempted((curr) => [...curr, square.innerHTML]);
+        if (gameWord.charAt(index) == square.innerHTML) {
+          console.log("gets inside rightplace conditional");
+          square.classList.add("rightPlace");
+
+          if (!rightPlace.includes(square.innerText)) {
+            setRightPlace((curr) => [...curr, square.innerHTML]);
+          }
         }
       });
       i++;

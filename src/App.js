@@ -101,14 +101,16 @@ const App = () => {
   const handleWindowResize = () => {
     const resolution = window.innerWidth;
 
-    if (resolution >= 320 && resolution <= 1024) {
+    if (resolution >= 320 && resolution <= 600 && isMobile === false) {
       toggleIsMobile(true);
-    } else toggleIsMobile(false);
+    } else if (
+      (resolution < 320 && isMobile === true) ||
+      (resolution > 600 && isMobile === true)
+    ) {
+      toggleIsMobile(false);
+    }
   };
-
-  useEffect(() => {
-    handleWindowResize();
-  }, [window.innerWidth]);
+  window.addEventListener("resize", handleWindowResize);
 
   const textInput = useRef();
   const handleMouseUp = () => {
@@ -158,6 +160,8 @@ const App = () => {
           setAttempted={setAttempted}
           setRightPlace={setRightPlace}
           setWrongPlace={setWrongPlace}
+          rightPlace={rightPlace}
+          wrongPlace={wrongPlace}
         />
       </section>
       <footer>
