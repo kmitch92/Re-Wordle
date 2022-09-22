@@ -2,7 +2,7 @@ import "./App.css";
 import Qwerty from "./components/Qwerty";
 import Grid from "./components/Grid";
 import legalWordsArray from "./legalWords";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import gameWordArray from "./words";
 
 const App = () => {
@@ -18,6 +18,7 @@ const App = () => {
   const [nextWord, setNextWord] = useState(
     gameWordArray[Math.floor(Math.random() * gameWordArray.length)]
   );
+  const [isMobile, toggleIsMobile] = useState(false);
 
   while (nextWord === gameWord) {
     setNextWord(
@@ -97,6 +98,18 @@ const App = () => {
     }
   };
 
+  const handleWindowResize = () => {
+    const resolution = window.innerWidth;
+
+    if (resolution >= 320 && resolution <= 1024) {
+      toggleIsMobile(true);
+    } else toggleIsMobile(false);
+  };
+
+  useEffect(() => {
+    handleWindowResize();
+  }, [window.innerWidth]);
+
   const textInput = useRef();
   const handleMouseUp = () => {
     textInput.current.focus();
@@ -107,16 +120,28 @@ const App = () => {
       <header>
         <h1 className="title">Re-Wordle</h1>
       </header>
-      <input
-        className="input"
-        autoFocus
-        onFocus={(event) => event.preventDefault}
-        onChange={handleKeyUp}
-        onKeyPress={enterListener}
-        onKeyUp={appendAttempted}
-        value={currentGuess}
-        ref={textInput}
-      ></input>
+      {isMobile ? (
+        <input
+          className="input"
+          autoFocus
+          readOnly={true}
+          onChange={handleKeyUp}
+          onKeyPress={enterListener}
+          onKeyUp={appendAttempted}
+          value={currentGuess}
+          ref={textInput}
+        ></input>
+      ) : (
+        <input
+          className="input"
+          autoFocus
+          onChange={handleKeyUp}
+          onKeyPress={enterListener}
+          onKeyUp={appendAttempted}
+          value={currentGuess}
+          ref={textInput}
+        ></input>
+      )}
       <section>
         <Grid
           id="grid"
