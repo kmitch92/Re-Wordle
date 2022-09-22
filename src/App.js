@@ -2,7 +2,7 @@ import "./App.css";
 import Qwerty from "./components/Qwerty";
 import Grid from "./components/Grid";
 import legalWordsArray from "./legalWords";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import gameWordArray from "./words";
 
 const App = () => {
@@ -25,8 +25,6 @@ const App = () => {
       gameWordArray[Math.floor(Math.random() * gameWordArray.length)]
     );
   }
-
-  console.log(gameWord);
 
   const handleKeyUp = (event) => {
     event.preventDefault();
