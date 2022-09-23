@@ -98,11 +98,20 @@ const App = () => {
     }
   };
 
-  const handleWindowResize = () => {
-    const resolution = window.self.screen.availWidth;
-    console.log("window", window);
+  const ios = () => {
+    if (typeof window === `undefined` || typeof navigator === `undefined`)
+      return false;
 
-    if (resolution >= 320 && resolution <= 828 && isMobile === false) {
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent || navigator.vendor);
+  };
+
+  const handleWindowResize = () => {
+    const resolution = window.innerWidth;
+
+    if (
+      (resolution >= 320 && resolution <= 700 && isMobile === false) ||
+      ios() === true
+    ) {
       toggleIsMobile(true);
     } else if (
       (resolution < 320 && isMobile === true) ||
@@ -127,9 +136,6 @@ const App = () => {
         <input
           className="input"
           readOnly={true}
-          onChange={handleKeyUp}
-          onKeyPress={enterListener}
-          onKeyUp={appendAttempted}
           value={currentGuess}
           ref={textInput}
         ></input>
