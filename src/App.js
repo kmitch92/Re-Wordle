@@ -99,13 +99,14 @@ const App = () => {
   };
 
   const handleWindowResize = () => {
-    const resolution = window.innerWidth;
+    const resolution = window.self.screen.availWidth;
+    console.log("window", window);
 
-    if (resolution >= 320 && resolution <= 981 && isMobile === false) {
+    if (resolution >= 320 && resolution <= 828 && isMobile === false) {
       toggleIsMobile(true);
     } else if (
       (resolution < 320 && isMobile === true) ||
-      (resolution > 981 && isMobile === true)
+      (resolution > 828 && isMobile === true)
     ) {
       toggleIsMobile(false);
     }
