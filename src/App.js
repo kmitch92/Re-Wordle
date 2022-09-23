@@ -125,7 +125,6 @@ const App = () => {
       {isMobile ? (
         <input
           className="input"
-          autoFocus
           readOnly={true}
           onChange={handleKeyUp}
           onKeyPress={enterListener}
